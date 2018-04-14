@@ -10,10 +10,12 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import java.lang.Math.cos
 import java.lang.Math.sin
+import java.util.*
 
 
 class CanvasView(context: Context) : SurfaceView(context), SurfaceHolder.Callback {
 
+    val pointsToDraw: LinkedList<DrawablePoint> = LinkedList()
 
     init {
 
@@ -25,6 +27,11 @@ class CanvasView(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
     override fun onDraw(canvas: Canvas) {
         canvas.drawColor(Color.BLACK)
     }
+
+     fun addDrawablePoint(point: DrawablePoint)
+     {
+         pointsToDraw.add(point)
+     }
 
      fun drawRangeCircle(canvas: Canvas) {
          super.draw(canvas)
@@ -57,15 +64,18 @@ class CanvasView(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
     }
     // Implements method of SurfaceHolder.Callback
     override fun surfaceCreated(holder: SurfaceHolder) {
-        val canvas  = holder.lockCanvas()
-        drawRangeCircle(canvas)
-        drawPoint(canvas,0.toDouble(),30.toDouble())
-        drawPoint(canvas,45.toDouble(),40.toDouble())
-        drawPoint(canvas,90.toDouble(),50.toDouble())
-        drawPoint(canvas,180.toDouble(),80.toDouble())
-        this.holder.unlockCanvasAndPost(canvas);
+      drawAll()
     }
 
+    fun drawAll()
+    {
+        val canvas  = holder.lockCanvas()
+        drawRangeCircle(canvas)
+        for (i in pointsToDraw){
+            drawPoint(canvas,i.angle,i.distance)
+        }
+        this.holder.unlockCanvasAndPost(canvas);
+    }
     // Implements method of SurfaceHolder.Callback
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
     }
