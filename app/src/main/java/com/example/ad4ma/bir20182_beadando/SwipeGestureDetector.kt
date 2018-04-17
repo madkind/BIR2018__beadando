@@ -3,6 +3,7 @@ package com.example.ad4ma.bir20182_beadando
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
+import kotlin.reflect.jvm.*
 
 
 
@@ -21,6 +22,7 @@ class CustomGestureDetector : GestureDetector.OnGestureListener, GestureDetector
     }
 
     override fun onDoubleTap(e: MotionEvent): Boolean {
+        BluetoothManager.getInstance()?.send("4", true)
         Log.d("gesture","onDoubleTap")
         return true
     }
@@ -58,17 +60,21 @@ class CustomGestureDetector : GestureDetector.OnGestureListener, GestureDetector
         when (getSlope(e1.x, e1.y, e2.x, e2.y)) {
             1 -> {
                 Log.d(LOGTAG, "top")
+                BluetoothManager.getInstance()?.send("0", true)
                 return true
             }
             2 -> {
+                BluetoothManager.getInstance()?.send("3", true)
                 Log.d(LOGTAG, "left")
                 return true
             }
             3 -> {
+                BluetoothManager.getInstance()?.send("1", true)
                 Log.d(LOGTAG, "down")
                 return true
             }
             4 -> {
+                BluetoothManager.getInstance()?.send("2", true)
                 Log.d(LOGTAG, "right")
                 return true
             }

@@ -3,6 +3,7 @@ package com.example.ad4ma.bir20182_beadando
 import android.graphics.Canvas
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 
 class Feladat1Activity : AppCompatActivity() {
@@ -13,11 +14,7 @@ class Feladat1Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val cv = CanvasView(this)
         setContentView(cv)
-        cv.addDrawablePoint(DrawablePoint(0.toDouble(),100.toDouble()))
-        cv.addDrawablePoint(DrawablePoint(10.toDouble(),100.toDouble()))
-        cv.addDrawablePoint(DrawablePoint(30.toDouble(),100.toDouble()))
-        cv.addDrawablePoint(DrawablePoint(40.toDouble(),100.toDouble()))
-        cv.addDrawablePoint(DrawablePoint(100.toDouble(),100.toDouble()))
+
 
        // cv.drawAll()
 
@@ -26,6 +23,14 @@ class Feladat1Activity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        BluetoothManager.getInstance()?.setOnDataReceivedListener { data, message ->
+           try {
+               Log.d("BT",message)
+              var splitted = message.split(":")
+               cv?.addDrawablePoint(DrawablePoint(splitted[0].toDouble(),splitted[1].toDouble()))
+               cv?.drawAll()
+           }catch (e: Exception){}
+        }
         cv?.drawAll()
     }
 }

@@ -21,10 +21,8 @@
         </activity>
         <activity android:name=".Feladat1Activity" />
         <activity android:name="app.akexorcist.bluetoothspp.DeviceList" />
+        <activity android:name=".Feladat2Activity" />
 
-
-
-        <activity android:name=".Feladat2Activity"></activity>
     </application>
 
 </manifest>

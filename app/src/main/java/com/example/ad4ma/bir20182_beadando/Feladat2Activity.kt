@@ -19,7 +19,6 @@ class Feladat2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feladat2)
 
-
         val customGestureDetector = CustomGestureDetector()
 
         mGestureDetector = GestureDetector(this, customGestureDetector)
