@@ -8,29 +8,33 @@ import android.view.WindowManager
 
 class Feladat1Activity : AppCompatActivity() {
 
-    val cv : CanvasView? = null
+        lateinit var cv: CanvasView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val cv = CanvasView(this)
+        cv = CanvasView(this)
         setContentView(cv)
 
 
-       // cv.drawAll()
-
+       if(cv == null)
+           Log.d("CV", " oncreate null")
+        else
+           Log.d("CV", " oncreate initialized")
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         BluetoothManager.getInstance()?.setOnDataReceivedListener { data, message ->
            try {
                Log.d("BT",message)
               var splitted = message.split(":")
-               cv?.addDrawablePoint(DrawablePoint(splitted[0].toDouble(),splitted[1].toDouble()))
-               cv?.drawAll()
+               cv.addDrawablePoint(DrawablePoint(splitted[0].toDouble(),splitted[1].toDouble()))
+
+               cv.drawAll()
            }catch (e: Exception){}
         }
-        cv?.drawAll()
+
     }
+
 }
