@@ -14,22 +14,18 @@ class Feladat1Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         cv = CanvasView(this)
         setContentView(cv)
-
-
-       if(cv == null)
-           Log.d("CV", " oncreate null")
-        else
-           Log.d("CV", " oncreate initialized")
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
     override fun onResume() {
         super.onResume()
+        BluetoothManager.getInstance()?.send(BluetoothMessages.FELADAT1START.ordinal.toString(),true)
+
         BluetoothManager.getInstance()?.setOnDataReceivedListener { data, message ->
            try {
                Log.d("BT",message)
-              var splitted = message.split(":")
-               cv.addDrawablePoint(DrawablePoint(splitted[0].toDouble(),splitted[1].toDouble()))
+              var splitted = message.split("|")
+               cv.addDrawablePoint(DrawablePoint(splitted[1].toDouble(),splitted[0].toDouble()))
 
                cv.drawAll()
            }catch (e: Exception){}
@@ -37,4 +33,8 @@ class Feladat1Activity : AppCompatActivity() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        BluetoothManager.getInstance()?.send(BluetoothMessages.FELADAT1END.ordinal.toString(),true)
+    }
 }

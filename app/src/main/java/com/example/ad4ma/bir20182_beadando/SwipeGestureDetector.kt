@@ -22,7 +22,7 @@ class CustomGestureDetector : GestureDetector.OnGestureListener, GestureDetector
     }
 
     override fun onDoubleTap(e: MotionEvent): Boolean {
-        BluetoothManager.getInstance()?.send("4", true)
+        BluetoothManager.getInstance()?.send(BluetoothMessages.STOP.ordinal.toString(), true)
         Log.d("gesture","onDoubleTap")
         return true
     }
@@ -60,21 +60,21 @@ class CustomGestureDetector : GestureDetector.OnGestureListener, GestureDetector
         when (getSlope(e1.x, e1.y, e2.x, e2.y)) {
             1 -> {
                 Log.d(LOGTAG, "top")
-                BluetoothManager.getInstance()?.send("0", true)
+                BluetoothManager.getInstance()?.send(BluetoothMessages.START.ordinal.toString(), true)
                 return true
             }
             2 -> {
-                BluetoothManager.getInstance()?.send("3", true)
+                BluetoothManager.getInstance()?.send(BluetoothMessages.LEFT.ordinal.toString(), true)
                 Log.d(LOGTAG, "left")
                 return true
             }
             3 -> {
-                BluetoothManager.getInstance()?.send("1", true)
+                BluetoothManager.getInstance()?.send(BluetoothMessages.DOWN.ordinal.toString(), true)
                 Log.d(LOGTAG, "down")
                 return true
             }
             4 -> {
-                BluetoothManager.getInstance()?.send("2", true)
+                BluetoothManager.getInstance()?.send(BluetoothMessages.RIGHT.ordinal.toString(), true)
                 Log.d(LOGTAG, "right")
                 return true
             }

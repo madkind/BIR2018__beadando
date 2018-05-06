@@ -30,4 +30,13 @@ class Feladat2Activity : AppCompatActivity() {
         mGestureDetector?.onTouchEvent(event)
         return super.onTouchEvent(event)
     }
+
+    override fun onResume() {
+        super.onResume()
+        BluetoothManager.getInstance()?.send(BluetoothMessages.FELADAT2START.ordinal.toString(),true)
+    }
+    override fun onPause() {
+        super.onPause()
+        BluetoothManager.getInstance()?.send(BluetoothMessages.FELADAT2END.ordinal.toString(),true)
+    }
 }
